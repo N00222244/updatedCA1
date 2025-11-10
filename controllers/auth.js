@@ -45,5 +45,30 @@ router.post("/register", async (req, res)=>{
     user, });
 });
 
+    // User login
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  // Find user by email
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new HttpError(UNAUTHORIZED, "Invalid credentials");
+  }
+
+  // Verify password
+  const passwordCorrect = await user.verifyPassword(password);
+  if (!passwordCorrect) {
+    throw new HttpError(UNAUTHORIZED, "Invalid credentials");
+  }
+
+  // Set session
+  req.session.userId = user._id.toString();
+
+  res.status(200).json({
+    message: "Login successful",
+    user,
+  });
+});
+
 
 export default router;
