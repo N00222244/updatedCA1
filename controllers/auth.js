@@ -71,4 +71,15 @@ router.post("/login", async (req, res) => {
 });
 
 
+router.post("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      throw new HttpError(INTERNAL_SERVER_ERROR, "Log out unsuccesful");
+    }
+    res.clearCookie("sessionId"); // Clear the session cookie
+    res.status(200).json({ message: "Logout successful" });
+  });
+});
+
+
 export default router;
