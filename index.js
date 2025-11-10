@@ -3,15 +3,15 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
+import createApp from './app.js';
 
 
 
 
-const app = express();
 
 
 
-app.connectDB = async () => {
+const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log("MongoDB connected");
@@ -22,14 +22,16 @@ app.connectDB = async () => {
 };
 
 
-app.get("/", (req, res) => {
-  res.send("Hello! Your server is working");
-});
+// app.get("/", (req, res) => {
+//   res.send("Hello! Your server is working");
+// });
 
 const PORT = process.env.PORT || 3001;
 const startServer = async () => {
   try {
-    await app.connectDB();
+    await connectDB();
+    console.log("Database connected");
+    const app = createApp();
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });

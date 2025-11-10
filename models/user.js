@@ -9,31 +9,31 @@ import bcrypt from "bcrypt";
 //Editor will be able to edit certain entities details and remove some where as admin will have full crud abilities across the site.
 
 const userSchema = new mongoose.Schema({
-    Name:{
+    name:{
         type: String,
-        minlength: 5,
+        minlength: 2,
         required: true,
     },
 
-    Email:{
+    email:{
         type: String,
         minlength: 4,
         required: true,
     },
 
-    Password:{
+    passwordHash:{
         type: String,
         minlength: 5,
         required: true,
     },
     
-    Phone:{
+    phone:{
         type: "String",
         minlength: 6,
         required: "false",
     },
 
-    Role:{
+    role:{
         type: String,
         enum: ["user", "editor" ,"admin" ],
         default: "user",
@@ -57,7 +57,7 @@ userSchema.set("toJSON", {
         returnedObject.id = returnedObject._id.toString();
         delete returnedObject._id;
         delete returnedObject.__v;
-        delete returnedObject.Password; 
+        delete returnedObject.passwordHash; 
         delete returnedObject.createdAt;
         delete returnedObject.updatedAt;
     }
