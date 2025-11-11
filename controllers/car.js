@@ -24,7 +24,7 @@ carsRouter.get("/:id", validate(carIdSchema), async (req, res) => {
   const car = await Car.findById(req.params.id).exec() 
 
   if (!car) {
-    throw new HttpError(NOT_FOUND, "Could not find note");
+    throw new HttpError(NOT_FOUND, "Could not find Car");
   }
 
   res.json(car);
@@ -45,6 +45,31 @@ carsRouter.post("/", validate(carSchema), async (req, res) => {
     extras
   });
   
+  res.json(car);
+});
+
+
+//defines endpoint that updates car
+
+carsRouter.patch("/:id", validate(carIdSchema), async (req, res) => {
+  const { id } = req.params;
+  const { modelName, year, price, engineSize, mileage, description, extras } = req.body;
+
+  const car = await Car.findByIdAndUpdate(
+    id,
+    { modelName, 
+      year, 
+      price, 
+      engineSize, 
+      mileage, 
+      description, 
+      extras 
+    }).exec();
+
+  if (!car) {
+    throw new HttpError(NOT_FOUND, "Could not find car.");
+  }
+
   res.json(car);
 });
 
