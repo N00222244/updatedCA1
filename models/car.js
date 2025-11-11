@@ -10,8 +10,8 @@ const carSchema = new mongoose.Schema(
         },
         year: {
             type: Number,
-            minl: 1000,
-            maxl: 9999,
+            min: 1900,
+            max: 2025,
             required: true,
         },
         price: {
@@ -41,7 +41,7 @@ const carSchema = new mongoose.Schema(
 )
 
 
-noteSchema.set("toJSON", {
+carSchema.set("toJSON", {
   transform: (_document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
