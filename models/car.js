@@ -35,10 +35,15 @@ const carSchema = new mongoose.Schema(
         extras: {
             type: [String],
             required: false,
-        }
+        },
+        brand: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Brand", // reference to the Brand
+        required: true
+        },
 
     }
-)
+);
 
 
 carSchema.set("toJSON", {

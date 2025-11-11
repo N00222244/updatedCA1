@@ -13,7 +13,7 @@ const carsRouter = Router();
 
 // defines endpoint that gets all cars from db, checks to make sure users session id 
 carsRouter.get("/", async (req,res) => {
-    const cars = await Car.find().exec();
+    const cars = await Car.find().populate("brand").exec();
     res.json(cars);
 })
 
@@ -21,7 +21,7 @@ carsRouter.get("/", async (req,res) => {
 //defines endpoint that gets car by id
 carsRouter.get("/:id", validate(carIdSchema), async (req, res) => {
 
-  const car = await Car.findById(req.params.id).exec() 
+  const car = await Car.findById(req.params.id).populate("brand").exec() 
 
   if (!car) {
     throw new HttpError(NOT_FOUND, "Could not find Car");
@@ -33,7 +33,7 @@ carsRouter.get("/:id", validate(carIdSchema), async (req, res) => {
 //defines endpoint that creates car
 carsRouter.post("/", validate(carSchema), async (req, res) => {
  
- const { modelName, year, price, engineSize, mileage, description, extras } = req.body;
+ const { modelName, year, price, engineSize, mileage, description, extras, brand } = req.body;
 
    const car = await Car.create({
     modelName,
@@ -42,7 +42,8 @@ carsRouter.post("/", validate(carSchema), async (req, res) => {
     engineSize,
     mileage,
     description,
-    extras
+    extras,
+    brand
   });
   
   res.json(car);
@@ -53,7 +54,7 @@ carsRouter.post("/", validate(carSchema), async (req, res) => {
 
 carsRouter.patch("/:id", validate(carIdSchema), async (req, res) => {
   const { id } = req.params;
-  const { modelName, year, price, engineSize, mileage, description, extras } = req.body;
+  const { modelName, year, price, engineSize, mileage, description, extras, brand } = req.body;
 
   const car = await Car.findByIdAndUpdate(
     id,
@@ -63,7 +64,8 @@ carsRouter.patch("/:id", validate(carIdSchema), async (req, res) => {
       engineSize, 
       mileage, 
       description, 
-      extras 
+      extras,
+      brand
     }).exec();
 
   if (!car) {
