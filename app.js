@@ -6,6 +6,7 @@ import adminRouter from "./controllers/admin.js";
 import carsRouter from "./controllers/car.js";
 import brandRouter from "./controllers/brand.js";
 import {requireAdmin,sessionMiddleware } from "./middleware/auth.js";
+import dealershipRouter from "./controllers/dealership.js";
 
 
 const createApp = () => {
@@ -23,6 +24,7 @@ const createApp = () => {
   app.use("/api/admin", requireAdmin, adminRouter);
   app.use("/api/car", carsRouter);
   app.use("/api/brand", brandRouter);
+  app.use("/api/dealership", dealershipRouter);
 
 
   

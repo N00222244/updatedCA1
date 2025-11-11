@@ -8,11 +8,11 @@ const dealershipSchema = new mongoose.Schema(
             minlength: 5,
             required: true,
         },
-        Location: {
+        location: {
             type: String,
             required:true,
         },
-        Phone: {
+        phone: {
             type: String, 
             required: true,
         },

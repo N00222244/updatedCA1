@@ -183,3 +183,38 @@ export const brandIdSchema = {
     },
   },
 };
+
+
+export const dealershipSchema = {
+  dealershipName:{
+    in: ["body"],
+    notEmpty:{
+      errorMessage: "Dealership Name is Required"
+    }
+  },
+
+  location:{
+    in: ["body"],
+    notEmpty:{
+      errorMessage: "Location is Required"
+    }
+  },
+
+  phone:{
+    in: ["body"],
+    notEmpty:{
+      errorMessage: "LogoUrl Name is Required"
+    }
+  },
+}
+
+
+export const dealershipIdSchema = {
+  id: {
+    in: ["params"],
+    custom: {
+      options: (value) => mongoose.Types.ObjectId.isValid(value),
+      errorMessage: "Dealership ID 'id' parameter must be a valid ObjectId",
+    },
+  },
+};
