@@ -124,3 +124,62 @@ export const carIdSchema = {
     },
   },
 };
+
+
+export const brandSchema = {
+  brandName:{
+    in: ["body"],
+    notEmpty:{
+      errorMessage: "Brand Name is Required"
+    }
+  },
+
+  yearEstablished:{
+    in: ["body"],
+    notEmpty:{
+      errorMessage: "Year is Required"
+    },
+    isInt: {
+      options: { min: 1810, max: 2025 },
+      errorMessage: "Year must be between 1810 and 2025"
+    },
+  },
+
+  logoUrl:{
+    in: ["body"],
+    notEmpty:{
+      errorMessage: "LogoUrl Name is Required"
+    }
+  },
+
+  website:{
+    in: ["body"],
+    notEmpty:{
+      errorMessage: "Website is Required"
+    }
+  },
+
+  country:{
+    in: ["body"],
+    notEmpty:{
+      errorMessage: "Country is Required"
+    }
+  },
+
+  description:{
+    in: ["body"],
+    notEmpty:{
+      errorMessage: "Country is Required"
+    }
+  },
+}
+
+export const brandIdSchema = {
+  id: {
+    in: ["params"],
+    custom: {
+      options: (value) => mongoose.Types.ObjectId.isValid(value),
+      errorMessage: "Brand ID 'id' parameter must be a valid ObjectId",
+    },
+  },
+};
