@@ -10,13 +10,16 @@ import {
     NOT_FOUND,
     TEAPOT } from "../utils/HttpError.js";
 
+import { validate } from "../middleware/validateRequest.js";
+import { loginSchema, registerSchema } from "../utils/validators.js";
+
 
 
 
 const router = express.Router();
 
 //post request to the /register endpoint
-router.post("/register", async (req, res)=>{
+router.post("/register", validate(registerSchema),async (req, res)=>{
     
     
     const {name, email, password, phone } = req.body;
@@ -46,7 +49,7 @@ router.post("/register", async (req, res)=>{
 });
 
     // User login
-router.post("/login", async (req, res) => {
+router.post("/login",  validate(loginSchema),async (req, res) => {
   const { email, password } = req.body;
 
   // Find user by email
