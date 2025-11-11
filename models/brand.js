@@ -29,9 +29,10 @@ const brandSchema = new mongoose.Schema(
         description: {
             type: String,
             required: false,
-        }
+        },
+        
     }
-)
+);
 
 
 brandSchema.set("toJSON", {

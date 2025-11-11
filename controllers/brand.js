@@ -2,6 +2,7 @@ import { Router } from "express";
 import {validate} from "../middleware/validateRequest.js";
 import Brand from "../models/brand.js";
 import { HttpError, NOT_FOUND } from "../utils/HttpError.js";
+import Dealership from "../models/dealership.js";
 import { brandIdSchema, brandSchema } from "../utils/validators.js";
 
 
@@ -26,8 +27,23 @@ brandRouter.get("/:id", validate(brandIdSchema), async (req, res) => {
   if (!brand) {
     throw new HttpError(NOT_FOUND, "Could not find Brand");
   }
+  //getting dealerships that have this brand
+  const dealerships = await Dealership.find({ brands: brand._id }).exec();
 
-  res.json(brand);
+  //returning dealerships within the json body.
+  res.json({
+    id: brand._id.toString(),
+    brandName: brand.brandName,
+    yearEstablished: brand.yearEstablished,
+    logoUrl: brand.logoUrl,
+    website: brand.website,
+    country: brand.country,
+    description: brand.description,
+    dealerships, 
+  });
+
+
+  
 });
 
 //defines endpoint that creates brand

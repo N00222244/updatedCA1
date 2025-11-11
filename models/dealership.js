@@ -16,8 +16,13 @@ const dealershipSchema = new mongoose.Schema(
             type: String, 
             required: true,
         },
+        brands: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Brand',
+            
+        }]
     }
-)
+);
 
 
 dealershipSchema.set("toJSON", {

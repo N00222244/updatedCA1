@@ -13,7 +13,7 @@ const dealershipRouter = Router();
 
 // defines endpoint that gets all dealership from db, checks to make sure users session id 
 dealershipRouter.get("/", async (req,res) => {
-    const dealership = await Dealership.find().exec();
+    const dealership = await Dealership.find().populate("brands").exec();
     res.json(dealership);
 })
 
@@ -21,7 +21,7 @@ dealershipRouter.get("/", async (req,res) => {
 //defines endpoint that gets dealership by id
 dealershipRouter.get("/:id", validate(dealershipIdSchema), async (req, res) => {
 
-  const dealership = await Dealership.findById(req.params.id).exec() 
+  const dealership = await Dealership.findById(req.params.id).populate("brands").exec() 
 
   if (!dealership) {
     throw new HttpError(NOT_FOUND, "Could not find Dealership");
@@ -33,12 +33,13 @@ dealershipRouter.get("/:id", validate(dealershipIdSchema), async (req, res) => {
 //defines endpoint that creates dealership
 dealershipRouter.post("/", validate(dealershipSchema), async (req, res) => {
  
- const { dealershipName, location, phone, } = req.body;
+ const { dealershipName, location, phone, brands } = req.body;
 
    const dealership = await Dealership.create({
     dealershipName,
     location,
     phone,
+    brands
   });
   
   res.json(dealership);
@@ -49,13 +50,14 @@ dealershipRouter.post("/", validate(dealershipSchema), async (req, res) => {
 
 dealershipRouter.patch("/:id", validate(dealershipIdSchema), async (req, res) => {
   const { id } = req.params;
-  const { dealershipName, location, phone, } = req.body;
+  const { dealershipName, location, phone, brands } = req.body;
 
   const dealership = await Dealership.findByIdAndUpdate(
     id,
     { dealershipName,
     location,
     phone,
+    brands
     
     }).exec();
 
