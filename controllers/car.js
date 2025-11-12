@@ -3,6 +3,7 @@ import {validate} from "../middleware/validateRequest.js";
 import Car from "../models/car.js";
 import { HttpError, NOT_FOUND } from "../utils/HttpError.js";
 import { carIdSchema, carSchema } from "../utils/validators.js";
+import {requireAdmin} from "../middleware/auth.js"
 
 
 // defining succes message when request is succesful but there is no content to preview 
@@ -31,7 +32,7 @@ carsRouter.get("/:id", validate(carIdSchema), async (req, res) => {
 });
 
 //defines endpoint that creates car
-carsRouter.post("/", validate(carSchema), async (req, res) => {
+carsRouter.post("/", requireAdmin,validate(carSchema), async (req, res) => {
  
  const { modelName, year, price, engineSize, mileage, description, extras, brand } = req.body;
 
@@ -52,7 +53,7 @@ carsRouter.post("/", validate(carSchema), async (req, res) => {
 
 //defines endpoint that updates car
 
-carsRouter.patch("/:id", validate(carIdSchema), async (req, res) => {
+carsRouter.patch("/:id", requireAdmin,validate(carIdSchema), async (req, res) => {
   const { id } = req.params;
   const { modelName, year, price, engineSize, mileage, description, extras, brand } = req.body;
 
@@ -76,7 +77,7 @@ carsRouter.patch("/:id", validate(carIdSchema), async (req, res) => {
 });
 
 // defines endpoint that deletes car
-carsRouter.delete("/:id", validate(carIdSchema), async (req, res) => {
+carsRouter.delete("/:id", requireAdmin,validate(carIdSchema), async (req, res) => {
 
   const result = await Car.findByIdAndDelete(req.params.id).exec();
 

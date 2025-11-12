@@ -4,7 +4,7 @@ import Brand from "../models/brand.js";
 import { HttpError, NOT_FOUND } from "../utils/HttpError.js";
 import Dealership from "../models/dealership.js";
 import { brandIdSchema, brandSchema } from "../utils/validators.js";
-
+import {requireAdmin} from "../middleware/auth.js"
 
 // defining succes message when request is succesful but there is no content to preview 
 const SUCCESS_NO_CONTENT = 204;
@@ -47,7 +47,7 @@ brandRouter.get("/:id", validate(brandIdSchema), async (req, res) => {
 });
 
 //defines endpoint that creates brand
-brandRouter.post("/", validate(brandSchema), async (req, res) => {
+brandRouter.post("/", requireAdmin ,validate(brandSchema), async (req, res) => {
  
  const { brandName, yearEstablished, logoUrl, website, country, description } = req.body;
 
@@ -66,7 +66,7 @@ brandRouter.post("/", validate(brandSchema), async (req, res) => {
 
 //defines endpoint that updates brand
 
-brandRouter.patch("/:id", validate(brandIdSchema), async (req, res) => {
+brandRouter.patch("/:id", requireAdmin,validate(brandIdSchema), async (req, res) => {
   const { id } = req.params;
   const { brandName, yearEstablished, logoUrl, website, country, description } = req.body;
 
@@ -88,7 +88,7 @@ brandRouter.patch("/:id", validate(brandIdSchema), async (req, res) => {
 });
 
 // defines endpoint that deletes brand
-brandRouter.delete("/:id", validate(brandIdSchema), async (req, res) => {
+brandRouter.delete("/:id", requireAdmin,validate(brandIdSchema), async (req, res) => {
 
   const result = await Brand.findByIdAndDelete(req.params.id).exec();
 
