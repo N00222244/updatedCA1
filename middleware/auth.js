@@ -1,8 +1,9 @@
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import User from "../models/user.js";
-import { UNAUTHORIZED, FORBIDDEN, HttpError } from "../utils/HttpError.js";
+import { UNAUTHORIZED, FORBIDDEN, HttpError, NOT_FOUND } from "../utils/HttpError.js";
 import mongoose from "mongoose";
+import Dealership from "../models/dealership.js";
 
 
 
@@ -48,7 +49,7 @@ export const requireRole = (...roles) => {
 
     const user = await User.findById(req.session.userId);
     if (!user) {
-      throw new HttpError(UNAUTHORIZED, "User not found");
+      throw new HttpError(NOT_FOUND, "User not found");
     }
 
     if (!roles.includes(user.role)) {
@@ -61,5 +62,35 @@ export const requireRole = (...roles) => {
   };
 };
 
+export const requireAdminOrOwner = async (req, res, next) => {
+  
+  
+  if (!req.session || !req.session.userId) {
+      throw new HttpError(UNAUTHORIZED, "Authentication required");
+    }
+  
+  const user = await User.findById(req.session.userId);
+
+  if (!user) {
+      throw new HttpError(NOT_FOUND, "User not found");
+    }
+
+  if (user.role === "admin") return next(); // Admin bypass
+
+  
+  const dealership = await Dealership.findById(req.params.dealershipId || req.params.id);
+
+  if (!dealership) throw new HttpError(NOT_FOUND, "Dealership not found");
+
+  
+  if (dealership.manager.toString() === user._id.toString()) {
+    return next();
+  }
+
+  throw new HttpError(FORBIDDEN, "You are not allowed to modify this dealership");
+};
+
 
 export const requireAdmin = requireRole("admin");
+
+export const requireAdminOrManger = requireRole("admin", "manager");

@@ -3,6 +3,8 @@ import {validate} from "../middleware/validateRequest.js";
 import Dealership from "../models/dealership.js";
 import { HttpError, NOT_FOUND } from "../utils/HttpError.js";
 import { dealershipIdSchema, dealershipSchema } from "../utils/validators.js";
+import { requireAdminOrManger, requireAdminOrOwner } from "../middleware/auth.js";
+
 
 
 // defining succes message when request is succesful but there is no content to preview 
@@ -31,7 +33,7 @@ dealershipRouter.get("/:id", validate(dealershipIdSchema), async (req, res) => {
 });
 
 //defines endpoint that creates dealership
-dealershipRouter.post("/", validate(dealershipSchema), async (req, res) => {
+dealershipRouter.post("/", requireAdminOrManger ,validate(dealershipSchema), async (req, res) => {
  
  const { dealershipName, location, phone, brands } = req.body;
 
@@ -39,7 +41,9 @@ dealershipRouter.post("/", validate(dealershipSchema), async (req, res) => {
     dealershipName,
     location,
     phone,
-    brands
+    brands,
+    manager: req.user._id,
+
   });
   
   res.json(dealership);
@@ -48,7 +52,7 @@ dealershipRouter.post("/", validate(dealershipSchema), async (req, res) => {
 
 //defines endpoint that updates dealership
 
-dealershipRouter.patch("/:id", validate(dealershipIdSchema), async (req, res) => {
+dealershipRouter.patch("/:id", requireAdminOrOwner, validate(dealershipIdSchema), async (req, res) => {
   const { id } = req.params;
   const { dealershipName, location, phone, brands } = req.body;
 
@@ -69,7 +73,7 @@ dealershipRouter.patch("/:id", validate(dealershipIdSchema), async (req, res) =>
 });
 
 // defines endpoint that deletes dealership
-dealershipRouter.delete("/:id", validate(dealershipIdSchema), async (req, res) => {
+dealershipRouter.delete("/:id", requireAdminOrOwner,validate(dealershipIdSchema), async (req, res) => {
 
   const result = await Dealership.findByIdAndDelete(req.params.id).exec();
 
