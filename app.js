@@ -5,7 +5,7 @@ import authRouter from "./controllers/auth.js";
 import adminRouter from "./controllers/admin.js";
 import carsRouter from "./controllers/car.js";
 import brandRouter from "./controllers/brand.js";
-import {requireAdmin,sessionMiddleware } from "./middleware/auth.js";
+import {requireAdmin,requireAuth,sessionMiddleware } from "./middleware/auth.js";
 import dealershipRouter from "./controllers/dealership.js";
 
 
@@ -22,9 +22,9 @@ const createApp = () => {
 
   app.use("/api", authRouter);
   app.use("/api/admin", requireAdmin, adminRouter);
-  app.use("/api/car", carsRouter);
-  app.use("/api/brand", brandRouter);
-  app.use("/api/dealership", dealershipRouter);
+  app.use("/api/car", requireAuth , carsRouter);
+  app.use("/api/brand", requireAuth, brandRouter);
+  app.use("/api/dealership", requireAuth, dealershipRouter);
 
 
   
