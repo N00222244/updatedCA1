@@ -85,4 +85,20 @@ router.post("/logout", (req, res) => {
 });
 
 
+router.get("/me", async (req, res) => {
+  const userId = req.session.userId;
+
+  if (!userId) {
+    throw new HttpError(UNAUTHORIZED, "Not logged in");
+  }
+
+  const user = await User.findById(userId).select("name email phone"); 
+  if (!user) {
+    throw new HttpError(NOT_FOUND, "User not found");
+  }
+
+  res.status(200).json({ user });
+});
+
+
 export default router;
