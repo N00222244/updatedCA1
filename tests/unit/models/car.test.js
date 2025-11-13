@@ -45,6 +45,21 @@ describe("Car Model", () => {
         expect(car.brand).toBe(car.brand);
     })
 
+    test("Should fail if extras is not an array", async () =>{
+            const car = new Car({
+            modelName: "Toyota Yaris GR",
+            year: 1983,
+            price: 50000,
+            engineSize: 1.8,
+            mileage: 0,
+            description: "Hot hatch",
+            extras: "Heated Seats, All Wheel Drive Tuning",
+            brand: 1423453
+            });
+    
+            await expect(car.validate()).rejects.toThrow();        
+        });
+
 
     
 });
