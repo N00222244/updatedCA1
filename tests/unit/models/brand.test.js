@@ -82,5 +82,19 @@ describe("Brand Model", () => {
     });
 
 
+    test("Should fail if yearEstablished is not within maximum range(2025)", async () =>{
+        const brand2 = new Brand({
+            brandName: "Toyota",
+            yearEstablished: 2030,
+            logoUrl: "https/blahblah",
+            website: "toyota.com",
+            country: "japan",
+            description: "Best automakers in the world"
+        });
+
+        await expect(brand2.validate()).rejects.toThrow();        
+    });
+
+
     
 });
