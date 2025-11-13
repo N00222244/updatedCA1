@@ -25,6 +25,26 @@ describe("Car Model", () => {
         expect(car.brand).toBe(car.brand);
     })
 
+    test("Should create Car with valid data while omitting description/extras", ()=> {
+        const car = {
+            modelName: "Toyota Yaris GR",
+            year: 1983,
+            price: 50000,
+            engineSize: 1.8,
+            mileage: 0,
+            brand: 1423453
+        }
+
+        expect(car.modelName).toBe(car.modelName)
+        expect(car.year).toBe(car.year)
+        expect(car.price).toBe(car.price);
+        expect(car.engineSize).toBe(car.engineSize);
+        expect(car.mileage).toBe(car.mileage);
+        expect(car.description).toBeUndefined();
+        expect(car.extras).toBeUndefined();
+        expect(car.brand).toBe(car.brand);
+    })
+
 
     
 });
