@@ -1,8 +1,30 @@
-import Car from "../../../models/car.js"
+import Car from "../../../models/car.js";
 
 
 
 describe("Car Model", () => {
+    test("Should create Car with valid data", ()=> {
+        const car = {
+            modelName: "Toyota Yaris GR",
+            year: 1983,
+            price: 50000,
+            engineSize: 1.8,
+            mileage: 0,
+            description: "Hot hatch",
+            extras: ["Heated Seats", "All Wheel Drive Tuning"],
+            brand: 1423453
+        }
+
+        expect(car.modelName).toBe(car.modelName)
+        expect(car.year).toBe(car.year)
+        expect(car.price).toBe(car.price);
+        expect(car.engineSize).toBe(car.engineSize);
+        expect(car.mileage).toBe(car.mileage);
+        expect(car.description).toBe(car.description);
+        expect(car.extras).toBe(car.extras);
+        expect(car.brand).toBe(car.brand);
+    })
+
 
     
 });
