@@ -61,5 +61,35 @@ describe("Car Model", () => {
         });
 
 
+    test("Should fail if engine size is not within maximum range(10.0)", async () =>{
+            const car = new Car({
+            modelName: "Toyota Yaris GR",
+            year: 1983,
+            price: 50000,
+            engineSize: 12.0,
+            mileage: 0,
+            description: "Hot hatch",
+            extras: ["Heated Seats", "All Wheel Drive Tuning"],
+            brand: 1423453
+            });
+    
+            await expect(car.validate()).rejects.toThrow();        
+        });
+
+
+   test("Should fail if engine size is not within minimum range(0.5)", async () =>{
+            const car = new Car({
+            modelName: "Toyota Yaris GR",
+            year: 1983,
+            price: 50000,
+            engineSize: 0.2,
+            mileage: 0,
+            description: "Hot hatch",
+            extras: ["Heated Seats", "All Wheel Drive Tuning"],
+            brand: 1423453
+            });
+    
+            await expect(car.validate()).rejects.toThrow();        
+        });
     
 });
