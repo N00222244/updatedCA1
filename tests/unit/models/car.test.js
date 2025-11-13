@@ -91,5 +91,120 @@ describe("Car Model", () => {
     
             await expect(car.validate()).rejects.toThrow();        
         });
+
+
+   test("Should fail if year is not within minimum range(1900)", async () =>{
+            const car = new Car({
+            modelName: "Toyota Yaris GR",
+            year: 1850,
+            price: 50000,
+            engineSize: 1.0,
+            mileage: 0,
+            description: "Hot hatch",
+            extras: ["Heated Seats", "All Wheel Drive Tuning"],
+            brand: 1423453
+            });
+    
+            await expect(car.validate()).rejects.toThrow();        
+        });
+
+
+    test("Should fail if year is not within maximum range(2025)", async () =>{
+            const car = new Car({
+            modelName: "Toyota Yaris GR",
+            year: 2026,
+            price: 50000,
+            engineSize: 1.0,
+            mileage: 0,
+            description: "Hot hatch",
+            extras: ["Heated Seats", "All Wheel Drive Tuning"],
+            brand: 1423453
+            });
+    
+            await expect(car.validate()).rejects.toThrow();        
+        });
+
+    test("Should fail if year is not within maximum range(2025)", async () =>{
+            const car = new Car({
+            modelName: "Toyota Yaris GR",
+            year: 2026,
+            price: 50000,
+            engineSize: 1.0,
+            mileage: 0,
+            description: "Hot hatch",
+            extras: ["Heated Seats", "All Wheel Drive Tuning"],
+            brand: 1423453
+            });
+    
+            await expect(car.validate()).rejects.toThrow();        
+        });
+
+
+        test("Should fail if year is not a number", async () =>{
+            const car = new Car({
+            modelName: "Toyota Yaris GR",
+            year: "2014",
+            price: 50000,
+            engineSize: 1.0,
+            mileage: 0,
+            description: "Hot hatch",
+            extras: ["Heated Seats", "All Wheel Drive Tuning"],
+            brand: 1423453
+            });
+    
+            await expect(car.validate()).rejects.toThrow();        
+        });
+
+        test("Should fail if price is not a number", async () =>{
+            const car = new Car({
+            modelName: "Toyota Yaris GR",
+            year: 2014,
+            price: "50000",
+            engineSize: 1.0,
+            mileage: 0,
+            description: "Hot hatch",
+            extras: ["Heated Seats", "All Wheel Drive Tuning"],
+            brand: 1423453
+            });
+    
+            await expect(car.validate()).rejects.toThrow();        
+        });
+
+        
+        test("Should fail if engineSize is not a number", async () =>{
+            const car = new Car({
+            modelName: "Toyota Yaris GR",
+            year: 2014,
+            price: 50000,
+            engineSize: "1.0",
+            mileage: 0,
+            description: "Hot hatch",
+            extras: ["Heated Seats", "All Wheel Drive Tuning"],
+            brand: 1423453
+            });
+    
+            await expect(car.validate()).rejects.toThrow();        
+        }); 
+
+
+        test("Should fail if mileage is not a number", async () =>{
+            const car = new Car({
+            modelName: "Toyota Yaris GR",
+            year: 2014,
+            price: 50000,
+            engineSize: 1.0,
+            mileage: "0",
+            description: "Hot hatch",
+            extras: ["Heated Seats", "All Wheel Drive Tuning"],
+            brand: 1423453
+            });
+    
+            await expect(car.validate()).rejects.toThrow();        
+        }); 
+        
+        
+
+
+
     
 });
