@@ -21,6 +21,25 @@ describe("Brand Model", () => {
         expect(brand1.description).toBe(brand1.description);
     })
 
+
+    test("should create Brand without description", ()=> {
+        const brand1 = {
+            brandName: "Toyota",
+            yearEstablished: 1983,
+            logoUrl: "https/blahblah",
+            website: "toyota.com",
+            country: "japan",
+            
+        }
+
+        expect(brand1.brandName).toBe(brand1.brandName)
+        expect(brand1.yearEstablished).toBe(brand1.yearEstablished)
+        expect(brand1.logoUrl).toBe(brand1.logoUrl);
+        expect(brand1.website).toBe(brand1.website);
+        expect(brand1.country).toBe(brand1.country);
+        expect(brand1.description).toBeUndefined();
+    })
+
     test("Should fail if missing values", async () =>{
         const brand2 = new Brand({
             brandName: "",
@@ -61,6 +80,7 @@ describe("Brand Model", () => {
 
         await expect(brand2.validate()).rejects.toThrow();        
     });
+
 
     
 });
