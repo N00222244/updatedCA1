@@ -7,6 +7,7 @@ import carsRouter from "./controllers/car.js";
 import brandRouter from "./controllers/brand.js";
 import {requireAdmin,requireAuth,sessionMiddleware } from "./middleware/auth.js";
 import dealershipRouter from "./controllers/dealership.js";
+import helmet from "helmet";
 
 
 
@@ -17,7 +18,7 @@ const createApp = () => {
 
   app.use(express.json());
 
- 
+  app.use(helmet());
 
   app.use(sessionMiddleware());
 
