@@ -9,12 +9,15 @@ import {requireAdmin,requireAuth,sessionMiddleware } from "./middleware/auth.js"
 import dealershipRouter from "./controllers/dealership.js";
 
 
+
 const createApp = () => {
   const app = express();
 
   app.set("trust proxy", 1);
 
   app.use(express.json());
+
+ 
 
   app.use(sessionMiddleware());
 
