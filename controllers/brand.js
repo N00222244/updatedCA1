@@ -78,7 +78,7 @@ brandRouter.patch("/:id", requireAdmin,validate(brandIdSchema), async (req, res)
     website,
     country,
     description,
-    }).exec();
+    },{ new: true }).exec();
 
   if (!brand) {
     throw new HttpError(NOT_FOUND, "Could not find brand.");

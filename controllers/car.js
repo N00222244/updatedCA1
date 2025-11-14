@@ -67,7 +67,7 @@ carsRouter.patch("/:id", requireAdmin,validate(carIdSchema), async (req, res) =>
       description, 
       extras,
       brand
-    }).exec();
+    },{ new: true }).exec();
 
   if (!car) {
     throw new HttpError(NOT_FOUND, "Could not find car.");

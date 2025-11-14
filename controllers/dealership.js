@@ -63,7 +63,7 @@ dealershipRouter.patch("/:id", requireAdminOrOwner, validate(dealershipIdSchema)
     phone,
     brands
     
-    }).exec();
+    },{ new: true }).exec();
 
   if (!dealership) {
     throw new HttpError(NOT_FOUND, "Could not find dealership.");
