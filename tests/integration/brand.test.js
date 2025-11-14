@@ -239,15 +239,8 @@ describe("Auth API", () => {
 
         const agent = request.agent(app);
         const { email, password } = await createOrdinaryUser();
-
         await agent.post("/api/login").send({ email, password });
-
-
-        const updateResponse = await agent.get(`/api/brand`).send({
-            brandName: "Toyota",
-            description: "Toyora - best built cars in the world"
-        });
-
+        const updateResponse = await agent.get(`/api/brand`)
         expect(updateResponse.status).toBe(200);
       
     });
