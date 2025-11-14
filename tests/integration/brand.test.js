@@ -164,7 +164,7 @@ describe("Auth API", () => {
     
 
 
-    test("user can delete a brand", async () => {
+    test("user cant delete a brand", async () => {
 
         const agent = request.agent(app);
 
@@ -233,6 +233,27 @@ describe("Auth API", () => {
         expect(updateResponse.status).toBe(403);
       
     });
+
+
+    test("user can get all brands", async () => {
+
+        const agent = request.agent(app);
+        const { email, password } = await createOrdinaryUser();
+
+        await agent.post("/api/login").send({ email, password });
+
+
+        const updateResponse = await agent.get(`/api/brand`).send({
+            brandName: "Toyota",
+            description: "Toyora - best built cars in the world"
+        });
+
+        expect(updateResponse.status).toBe(200);
+      
+    });
+
+
+
 
 
 
