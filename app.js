@@ -8,6 +8,7 @@ import brandRouter from "./controllers/brand.js";
 import {requireAdmin,requireAuth,sessionMiddleware } from "./middleware/auth.js";
 import dealershipRouter from "./controllers/dealership.js";
 import helmet from "helmet";
+import cors from "cors";
 
 
 
@@ -21,7 +22,7 @@ const createApp = () => {
 
   app.use(cors({
     origin: [
-      "https://your-frontend.netlify.app", 
+      "", 
       "http://localhost:5173"              
     ],
     credentials: true
