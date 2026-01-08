@@ -44,6 +44,15 @@ const createApp = () => {
   app.use("/api/dealership", requireAuth, dealershipRouter);
 
 
+  app.use((err, req, res, next) => {
+  if (err instanceof HttpError) {
+    res.status(err.status).json({ error: err.message });
+  } else {
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
   
 
   return app;
