@@ -79,7 +79,7 @@ router.post("/logout", (req, res) => {
     if (err) {
       throw new HttpError(INTERNAL_SERVER_ERROR, "Log out unsuccesful");
     }
-    res.clearCookie("sessionId"); // Clear the session cookie
+    res.clearCookie("connect.sid"); // Clear the session cookie
     res.status(200).json({ message: "Logout successful" });
   });
 });

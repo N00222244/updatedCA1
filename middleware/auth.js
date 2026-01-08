@@ -11,7 +11,7 @@ import Dealership from "../models/dealership.js";
 export const sessionMiddleware = () =>
   session({
     secret: process.env.SESSION_SECRET,
-    name: "sessionId",
+    name: "connect.sid",
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
