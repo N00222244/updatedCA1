@@ -9,6 +9,7 @@ import {requireAdmin,requireAuth,sessionMiddleware } from "./middleware/auth.js"
 import dealershipRouter from "./controllers/dealership.js";
 import helmet from "helmet";
 import cors from "cors";
+import { HttpError } from "./utils/HttpError.js";
 
 
 
