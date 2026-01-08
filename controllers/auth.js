@@ -67,9 +67,14 @@ router.post("/login",  validate(loginSchema),async (req, res) => {
   // Set session
   req.session.userId = user._id.toString();
 
-  res.status(200).json({
-    message: "Login successful",
-    user,
+  req.session.save((err) => {
+    if (err) {
+      throw new HttpError(INTERNAL_SERVER_ERROR, "Session save failed");
+    }
+    res.status(200).json({
+      message: "Login successful",
+      user,
+    });
   });
 });
 
