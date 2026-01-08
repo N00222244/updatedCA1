@@ -30,7 +30,7 @@ const createApp = () => {
   }));
 
   // Handle preflight requests for all routes
-  app.options("*", cors({
+  app.options("/.*/", cors({
   origin: "https://luxuryautosca.netlify.app",
   credentials: true
 }));
