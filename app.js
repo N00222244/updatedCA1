@@ -22,8 +22,9 @@ const createApp = () => {
 
   app.use(cors({
     origin: [
-      "", 
-      "http://localhost:5173"              
+      "https://luxuryautosca.netlify.app",
+      "http://localhost:5173" 
+                   
     ],
     credentials: true
   }));
